@@ -42,7 +42,14 @@ public class Question6 {
 					start = k+1;
 				}
 			}
-			
+			/*
+			 * @Point[] rect
+			 * rect[0] = top left
+			 * rect[1] = top right
+			 * rect[2] = bottom left
+			 * rect[3] = bottom right
+			 * 
+			 */
 			Point[] rect = getRectangle(params);
 			
 			int numDarts = Integer.parseInt(scanner.nextLine());
@@ -59,17 +66,25 @@ public class Question6 {
 				}
 			}
 			
-			for(int k = 0; k < coords.length; k++) {
-				System.out.println(coords[k].toString());
-			}
+			
 		}
 		scanner.close();
 	}	
 	
 	private static Point[] getRectangle(double[] params) {
 		Point[] rect = new Point[4];
+		rect[0] = new Point(params[4], params[2]);
+		rect[1] = new Point(params[4]+params[0], params[2]);
+		rect[2] = new Point(params[4], params[2]+params[1]);
+		rect[3] = new Point(params[4]+params[0], params[2]+params[1]);
 		
 		return rect;
+	}
+	
+	private static boolean rectangleContains(Point point, Point[] rect) {
+		
+		//change!!
+		return true;
 	}
 	
 	static class Point {
