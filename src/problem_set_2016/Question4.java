@@ -15,9 +15,8 @@ public class Question4 {
 		
 		for(int i = 0; i < messages; i++) {
 			String encrypted = scanner.nextLine();
-			@SuppressWarnings("unused")
 			int length = Integer.parseInt(scanner.nextLine());
-			String key = scanner.nextLine();
+			
 			
 			String decrypted = "";
 
@@ -27,19 +26,13 @@ public class Question4 {
 				map.put(j+1, encrypted.substring(j, j+1));
 			}
 			
-			int start = 0;
-			
-			for(int k = 0; k < key.length(); k++) {
-				if(key.length() - k  <= 1) {
-					String a = getCharacter(map, Integer.parseInt(key.substring(start, key.length()).replace(" ", "")));
-					decrypted += a;
-					break;
-				} else if(key.substring(k, k+1).equals(" ")) {
-					String a = getCharacter(map, Integer.parseInt(key.substring(start, k)));
-					decrypted +=a;
-					start = k+1;
-				}
+			for(int k = 0; k < length; k++) {
+				String a = getCharacter(map, scanner.nextInt());
+				decrypted += a;
 			}
+			
+			if(scanner.hasNextLine())
+				scanner.nextLine();
 			
 			System.out.println(decrypted);
 			

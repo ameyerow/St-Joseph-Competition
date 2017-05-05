@@ -8,7 +8,7 @@ public class Question2 {
 	private static final File FILE = new File("IntersectionIn.txt");
 	
 	public static void main(String[] args) throws FileNotFoundException {
-        Scanner scanner = new Scanner(FILE);
+        Scanner scanner = new Scanner(FILE); 	
     
         int intersections = Integer.parseInt(scanner.nextLine());
         

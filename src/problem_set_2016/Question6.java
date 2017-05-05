@@ -13,7 +13,6 @@ public class Question6 {
 		int games = Integer.parseInt(scanner.nextLine());
 		
 		for(int i = 0; i < games; i++) {
-			String params_str = scanner.nextLine();
 			/*
 			 * @double[] params
 			 * params[0] = width (w)
@@ -26,22 +25,12 @@ public class Question6 {
 			 */
 			double[] params = new double[6];
 			
-			int params_index = 0;
-			
-			int start = 0;
-				
-			for(int k = 0; k < params_str.length(); k++) {
-				if(params_str.length() - k  <= 1) {
-					params[params_index] = Integer.parseInt(
-							params_str.substring(start, params_str.length()).replace(" ", ""));					
-					break;
-				} else if(params_str.substring(k, k+1).equals(" ")) {
-					params[params_index] = Integer.parseInt(params_str.substring(start, k));
-						
-					params_index++;
-					start = k+1;
-				}
+			for(int j = 0; j < 6; j++) {
+				params[j] = scanner.nextDouble();
 			}
+			
+			scanner.nextLine();
+				
 			/*
 			 * @double[] rect
 			 * rect[0] = left
@@ -57,14 +46,9 @@ public class Question6 {
 			Point[] coord_darts = new Point[numDarts]; 
 			
 			for(int k = 0; k < numDarts; k++) {
-				String coord_str = scanner.nextLine();
-				
-				for(int j = 0; j < coord_str.length(); j++) {
-					if(coord_str.substring(j, j+1).equals(" ")) {
-						coord_darts[k] = new Point( Double.parseDouble(coord_str.substring(0, j)),
-								Double.parseDouble(coord_str.substring(j+1, coord_str.length())) );
-					}
-				}
+				coord_darts[k] = new Point(scanner.nextDouble(), 
+						scanner.nextDouble());
+				scanner.nextLine();
 			}
 			
 			int score_l = 0;
@@ -171,9 +155,9 @@ public class Question6 {
 	
 	static class Point {
 		private double x;
-		public double getX() { return x; }
-		
 		private double y;
+		
+		public double getX() { return x; }
 		public double getY() { return y; }
 		
 		public Point(double x, double y) {

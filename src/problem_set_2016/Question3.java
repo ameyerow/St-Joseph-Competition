@@ -21,13 +21,21 @@ public class Question3 {
 			
 			int start = 0;
 			
+			
+			// using the scanner.nextInt() to get the values does not work 
+			// in this case because the number of values in the sequence
+			// can vary. This means it continues getting integers from the 
+			// next line.
+			
 			for(int j = 0; j < sequence.length(); j++) {
 				if(sequence.length() - j  <= 1) {
-					steps.add(Integer.parseInt(sequence.substring(start, sequence.length()).replace(" ", "")));
+					steps.add(Integer.parseInt(sequence.substring(start, 
+							sequence.length()).replace(" ", "")));
 					
 					break;
 				} else if(sequence.substring(j, j+1).equals(" ")) {
-					steps.add(Integer.parseInt(sequence.substring(start, j)));
+					steps.add(Integer.parseInt(sequence.substring(start, 
+							j)));
 					start = j+1;
 				}
 			}
