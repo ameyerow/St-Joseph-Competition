@@ -41,9 +41,11 @@ public class Question7 {
 			
 			for(int j = 1; j <= numDisks; j++) {
 				if(j != focus) {
-					if(compareDisks(map.get(focus), map.get(j)) == State.inside) {
+					if(compareDisks(map.get(focus), map.get(j)) 
+							== State.inside) {
 						inside.add(j);
-					} else if(compareDisks(map.get(focus), map.get(j)) == State.outside) {
+					} else if(compareDisks(map.get(focus), map.get(j)) 
+							== State.outside) {
 						outside.add(j);
 					}
 				}
