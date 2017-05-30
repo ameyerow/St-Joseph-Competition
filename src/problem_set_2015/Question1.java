@@ -71,34 +71,65 @@ public class Question1 {
 		}
 		
 		int combos = (int) Math.pow(n, n*n);
-		
+		long start = System.currentTimeMillis();
+		int u = 0;
 		for(int l = 0; l < combos; l++) {
+			u++;
+
 			int[][] temp = insertKey(lock, key, n);
 			
 			Test test = testKey(temp, n);
 			
 			if(test.getKeyBoolean()) {
+				long end = System.currentTimeMillis();
+				
+				double rate = 0;
+				
+				if(end-start > 0)
+					rate = (u / (end-start)) * 1000;
+				
+				System.out.println("Tested " + u +" of the " + combos + " cases at " + rate + " cases/sec");
 				return key;
 			} 
 			
-//			String a = "";
-//
-//			for(int j = 0; j < n*n; j++) {
-//				if(j != test.getIndex()) {
-//					a += "0";
-//				} else {
-//					a += "1";
-//				}
-//			}
-//			int add = Integer.parseInt(a, n);
-//			
-			key = Integer.toString(Integer.parseInt(key, n)+1, n);		
+			int z = test.getIndex();
+			
+			if(z <= (n*n-1)-n) {
+				z += n;	
+			} else if(z > (n*n-1)-n && z < n*n -1) {
+				z += 1;
+			}
+	
+			if(Integer.parseInt(key.substring(z, z+1)) >= n-1) {
+				z = n*n-1;
+			}
+			
+			String a = "";
+			for(int j = 0; j < n*n; j++) {
+				if(j != z) {
+					a += "0";
+				} else {
+					a += "1";
+				}
+			}
+			int add = Integer.parseInt(a, n);
+			l += add-1;
+			
+			key = Integer.toString(Integer.parseInt(key, n)+add, n);		
 			
 			while(key.length() < n*n) {
 				key = "0" + key;
 			}
 			if(key.length() > n*n) {break;}
 		}
+		long end = System.currentTimeMillis();
+		
+		double rate = 0;
+		
+		if(end-start > 0) 
+			rate = (u / (end-start)) * 1000;
+		
+		System.out.println("Tested " + u +" of the " + combos + " cases at " + rate + " cases/sec");
 		
 		return null;
 	}
@@ -121,7 +152,7 @@ public class Question1 {
 			for(int y = 1; y <= n; y++) {
 				int r = elementRemainder(lock, n, x, y);
 				
-				int index = (n*n -1) - 3 * (x-1) + (y-1);
+				int index = (n * (x-1) + (y-1));
 				
 				if(r > 0) {
 					return new Test(index, false);
