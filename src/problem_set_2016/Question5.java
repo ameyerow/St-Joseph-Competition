@@ -31,9 +31,8 @@ public class Question5 {
 		numbers.add("8");		numbers.add("9");
 		numbers.add(".");		numbers.add("-.");
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 10; i++) 
 			numbers.add("-" + i);
-		}
 		
 		Scanner scanner = new Scanner(FILE);
 		
