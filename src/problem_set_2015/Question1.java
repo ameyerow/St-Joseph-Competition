@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Question1 {
-	private static final File FILE = new File("CombinationIn.txt");
+	private static File file = new File("CombinationIn.txt");
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		Scanner scanner = new Scanner(FILE);
+		Scanner scanner = new Scanner(file);
 		
 		int locks = Integer.parseInt(scanner.nextLine());
 		
@@ -100,9 +100,9 @@ public class Question1 {
 				z += 1;
 			}
 	
-			if(Integer.parseInt(key.substring(z, z+1)) >= n-1) {
+			/*if(Integer.parseInt(key.substring(z, z+1)) >= n-1) {
 				z = n*n-1;
-			}
+			}*/
 			
 			String a = "";
 			for(int j = 0; j < n*n; j++) {
