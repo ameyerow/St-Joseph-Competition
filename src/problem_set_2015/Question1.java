@@ -16,7 +16,7 @@ public class Question1 {
 			int n = Integer.parseInt(scanner.nextLine());
 			
 			int[][] lock = getLock(scanner, n);
-			String key = getKey(n, lock);
+			String[] key = getKey(n, lock);
 			
 			if(key == null) {
 				System.out.println("false\n");
@@ -64,31 +64,22 @@ public class Question1 {
 		return lock;
 	}
 	
-	private static String getKey(int n, int[][] lock) {
-		String key = "";
-		for(int j = 0; j < n*n; j++) {
-			key += "0";
+	private static String[] getKey(int n, int[][] lock) {
+		String[] key = new String[n];
+		
+		for(int i = 0; i < n; i++) {
+			key[i] = "";
+			for(int j = 0; j < n; j++) {
+				key[i] += "0";
+			}
 		}
 		
-		int combos = (int) Math.pow(n, n*n);
-		long start = System.currentTimeMillis();
-		int u = 0;
-		for(int l = 0; l < combos; l++) {
-			u++;
-
+		main:while(true) {
 			int[][] temp = insertKey(lock, key, n);
 			
 			Test test = testKey(temp, n);
 			
 			if(test.getKeyBoolean()) {
-				long end = System.currentTimeMillis();
-				
-				double rate = 0;
-				
-				if(end-start > 0)
-					rate = (u / (end-start)) * 1000;
-				
-				System.out.println("Tested " + u +" of the " + combos + " cases at " + rate + " cases/sec");
 				return key;
 			} 
 			
@@ -99,10 +90,6 @@ public class Question1 {
 			} else if(z > (n*n-1)-n && z < n*n -1) {
 				z += 1;
 			}
-	
-			/*if(Integer.parseInt(key.substring(z, z+1)) >= n-1) {
-				z = n*n-1;
-			}*/
 			
 			String a = "";
 			for(int j = 0; j < n*n; j++) {
@@ -112,36 +99,59 @@ public class Question1 {
 					a += "1";
 				}
 			}
-			int add = Integer.parseInt(a, n);
-			l += add-1;
 			
-			key = Integer.toString(Integer.parseInt(key, n)+add, n);		
-			
-			while(key.length() < n*n) {
-				key = "0" + key;
+			int[] add = new int[n];
+			for(int i = 0; i < n; i++) {
+				String str = a.substring(i*n,(i*n)+(n));
+				
+				add[i] = Integer.parseInt(str, n);
 			}
-			if(key.length() > n*n) {break;}
-		}
-		long end = System.currentTimeMillis();
-		
-		double rate = 0;
-		
-		if(end-start > 0) 
-			rate = (u / (end-start)) * 1000;
-		
-		System.out.println("Tested " + u +" of the " + combos + " cases at " + rate + " cases/sec");
-		
+			
+			for(int i = 0; i < n; i++) {
+				key[i] = Integer.toString(Integer.parseInt(key[i], n) + add[i], n);
+			}
+			
+			for(int i = 0; i < n; i++) {
+				while(key[i].length() < n) {
+					key[i] = "0" + key[i];
+				}
+			}
+			
+			for(int i = n-1; i > 0; i--) {
+				if(key[i].length() > n) {
+					if(i == 0) {
+						break main;
+					} else {
+						key[i] = key[i].substring(1, key[i].length());
+						
+						key[i-1] = Integer.toString(Integer.parseInt(key[i-1], n) + 1, n);
+						
+						while(key[i-1].length() < n) {
+							key[i-1] = "0" + key[i-1];
+						}
+					}
+				}
+			}
+			
+			int length = 0;
+			for(String str : key) {
+				length += str.length();
+			}
+			
+			if(length > n*n) {break main;}
+		}	
 		return null;
 	}
 	
-	private static int[][] insertKey(int[][] lock, String key, int n) {
+	private static int[][] insertKey(int[][] lock, String[] key, int n) {
 		int i = 0;
 		for(int x = 1; x <= n; x++) {
 			for(int y = 1; y <= n; y++) {
-				int a = Integer.parseInt(key.substring(i, i+1));
+				int a = Integer.parseInt(key[x-1].substring(i, i+1));
 				lock[x][y] = a;
 				i++;
 			}
+			i = 0;
 		}	
 		
 		return lock;
